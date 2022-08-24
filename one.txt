@@ -1,0 +1,75 @@
+//算法思想：搜索整个顺序表，查找最小值元素并记住其位置，搜索结束后用最后一个元素填补
+//空出的原最小值元素的位置。
+//bool Del_Min(SqList& L, int& min)
+//{
+//	if (L.length == 0)
+//	{
+//		return	false;
+//	}
+//	min = L.data[0];
+//	int	pos = 0;
+//	for (int i = 1; i < L.length; i++)
+//	{
+//		if (L.data[i] < min)
+//		{
+//			min = L.data[i];
+//			pos = i;
+//		}
+//	}
+//	L.data[pos] = L.data[L.length - 1];
+//	L.length -= 1;
+//	return true;
+//}
+//算法思想：扫描顺序表L的前半部分元素，对于元素L.data[i](0<=i<L.length/2),
+//将其与后半部分对应的元素L.date[L.length-i-1]进行交换。
+//void Reverse(SqList& L) {
+//	int temp;
+//	for (int i = 0; i < L.length/2; i++)
+//	{
+//		temp = L.data[i];
+//		L.data[i] = L.data[L.length - 1 - i];
+//		L.data[L.length - 1 - i] = temp;
+//	}
+//}
+//算法思想：用K记录顺序表L中的不等于X的元素个数，扫描时将不等于X的元素移动到小标K的位置，
+//并更新K的值。
+//bool Del_x_1(SqList& L, int x)
+//{
+//	if (L.length==0)
+//	{
+//		return false;
+//	}
+//	int k=0;
+//	for (int i = 0; i < L.length; i++)
+//	{
+//		if (L.data[i]!=x)
+//		{			
+//			L.data[k] = L.data[i];
+//			k++;
+//		}
+//	}
+//	L.length = k;
+//	return true;
+//}
+//算法思想：用K记录顺序表L中等于X的元素个数，并将不等于X的元素放到I-K的位置。
+bool Del_x_2(SqList& L, int x)
+{
+	if (L.length == 0)
+	{
+		return false;
+	}
+	int k = 0;
+	for (int i = 0; i < L.length; i++)
+	{
+		if (L.data[i] == x)
+		{
+			k++;
+		}
+		else
+		{
+			L.data[i - k] = L.data[i];
+		}
+	}
+	L.length -= k;
+	return	true;
+}
