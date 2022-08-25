@@ -1,0 +1,76 @@
+实现顺序表前N元素和后M元素互换位置 
+//算法思想：先将数组A[m+n]的全部元素原地逆置，再对前m和后n个元素分别逆置
+bool Reverse(SqList& A, int left, int right) {
+  if (left >= right || right > A.length || A.length <= 0)//取值范围
+  {
+    return false;
+  }
+  int i = 0, j = 0, p = 0, k = 0;
+  int mid = (left + right) / 2;
+  for (int i = 0; i <= mid-left; i++)//前后两两交换
+  {
+    int  temp = A.data[left + i];
+    A.data[left + i] = A.data[right - i];
+    A.data[right - i] = temp;
+  }
+  return true;
+}
+bool Exchange(SqList& A, int m, int n)
+{
+
+  Reverse(A, 0, m + n - 1);
+  Reverse(A, 0, n - 1);
+  Reverse(A, n, m + n - 1);
+  return true;
+}
+合并两个有序顺序表到新表
+​
+//算法思想：按顺序不断取下两个顺序表表头较小的结点存入新的顺序表中。然后，看哪个表还有剩余，将剩余部分加到新的顺序表后
+bool Del_s_t(SqList A,SqList2 B,SqList3 &C ) {
+  if (A.length+B.length>C.maxSize)//不能大于顺序表最大长度
+  {
+    return false;
+  }
+  int i=0,j=0,k=0;
+  while (i<A.length&&j<B.length)//两两比较，较小值存入新表
+  {
+    if (A.data[i]<=B.data[j])
+    {
+      C.data[k++] = A.data[i++];
+    }
+    else
+    {
+      C.data[k++] = B.data[j++];
+    }
+  }
+  //剩余的添加到新表
+  while (i<A.length)
+  {
+    C.data[k++] = A.data[i++];
+  }
+  while (j<B.length)
+  {
+    C.data[k++] = B.data[j++];
+  }
+  C.length=A.length+B.length;
+  return true;
+}
+删除有序顺序表重复元素
+//算法思想：有序顺序表依次判断后面的元素是否与前面的元素相同，若相同继续向后判断，直到不同，则插入到非重复有序表最后。
+bool Del_s_t(SqList& L) {
+  int k = 0;
+  if (L.length==0)
+  {
+    return false;
+  }
+  int i, j;
+  for ( i = 0,j=1; j < L.length; j++)
+  {
+    if (L.data[i]!=L.data[j])//查找下一个与上个元素值不同的元素
+    {
+      L.data[++i] = L.data[j];//覆盖相同的元素
+    }
+  }
+  L.length = i+1;
+  return true;
+}
